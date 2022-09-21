@@ -1,1 +1,25 @@
+#!bin/bash
+#Cria as variáveis necessárias para fazer o backup
+DATABASE='nome_do_banco'
+export PGUSER='usuario'
+export PGPASSWORD='senha'
+export PGUSER PGPASSWORD
+IFS='|'
+for base in $DATABASE; do
+#Otimiza o banco para o backup
+#vacuumdb -vfz -h localhost $base
+#reindexdb -d $base -h localhost -e
 
+#Remove os backups com mais de 10 dias de idade (usado para evitar que o HDD fique lotado).
+echo "Removendo os backups com mais de 4 dias."
+find /home/inovadora/backups/dump/ -type f -mtime +3 -name "*" | xargs rm -f
+
+#Define as variaveis para nome do arquivo do backup e do log
+NOMEARQ='/home/inovadora/backups/dump/'$base'_'$(date +%Y_%m_%d)".backup"
+NOMELOG='/home/inovadora/backups/dump/'$base'_'$(date +%Y_%m_%d)".log"
+
+#Gera backup do sistema
+echo "Iniciando o Backup"
+pg_dump $base -h localhost -F c -v -f $NOMEARQ >$NOMELOG 2>>$NOMELOG
+echo "Fim do Backup"
+done
