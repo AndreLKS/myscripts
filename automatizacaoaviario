@@ -1,0 +1,118 @@
+# trabalho P.I
+from ast import Break
+from random import randint
+from re import I
+from time import sleep
+
+def iluminacao_lona():
+    global iluminacao_v
+    iluminacao_v = randint(10, 14)
+    if iluminacao_v >= 13:
+      print('PROCESSANDO...')
+      sleep(1.5)
+      print('!' * 20)
+      print(f'\033[31mA luz está com {iluminacao_v}lux, acima do apropriado,')
+      print('\033[31mA lona amarela será acionada para cobrir toda a lateral.\033[m ') 
+      print('!' * 20)
+    else:
+        print('PROCESSANDO...')
+        sleep(1.5)
+        print('!' * 20)
+        print(f'\033[32mA luz está com {iluminacao_v}lux, apropiado para o ambiente. ')
+        print('\033[32mA lona amarela será acionada para cobrir ate a metade da lateral\033[m') 
+        print('!' * 20)   
+def nivel_agua():
+    global nivel_da_agua
+    nivel_da_agua = randint(1500, 1564)
+    if nivel_da_agua >= 1563:
+      print('PROCESSANDO...')
+      sleep(1.5)
+      print('!' * 20)
+      print(f'\033[31mO nivel de agua está cheio !! no total de {nivel_da_agua}Litros. ')
+      print('\033[31mA bomba da água será desligada.\033[m ') 
+      print('!' * 20)
+    else:
+        print('PROCESSANDO...')
+        sleep(1.5)
+        print('!' * 20)
+        print(f'\033[32mO reservatório de água está com {nivel_da_agua}litros. ')
+        print('\033[32mA Bomba da água será acionada para encher o reservatório até o fim.\033[m') 
+        print('!' * 20)    
+def silo_raçao():
+    global silo_de_raçao
+    silo_de_raçao = randint(700, 704)
+    if silo_de_raçao >= 703:
+      print('PROCESSANDO...')
+      sleep(1.5)
+      print('!' * 20)
+      print(f'\033[O Silo de ração está cheio !! no total de {silo_de_raçao}TON. ')
+      print('\033[31m o carregamento do Silo está desativado.\033[m] ') 
+      print('!' * 20)
+    else:
+        print('PROCESSANDO...')
+        sleep(1.5)
+        print('!' * 20)
+        print(f'\033[32mO Silo de ração está com {silo_de_raçao}TON. ')
+        print('\033[32mO carregamento do Silo será acionado até o limite permitido.\033[m') 
+        print('!' * 20)
+def solo_ave():
+    global solo_da_ave
+    solo_da_ave = randint(20, 24)
+    if solo_da_ave >= 23:
+      print('PROCESSANDO...')
+      sleep(1.5)
+      print('!' * 20)
+      print(f'\033[O Solo da granja está com a temperatura muito alta, com {solo_da_ave}°graus. ')
+      print('\033[31mO aquecedor da granja será acionado.\033[m] ') 
+      print('!' * 20)
+    else:
+        print('PROCESSANDO...')
+        sleep(1.5)
+        print('!' * 20)
+        print(f'\033[32mO Solo da granja está com a temperatura de {solo_da_ave}°graus. ')
+        print('\033[32mA temperatura está apropiada para os aves.\033[m') 
+        print('!' * 20)    
+
+def salvar():
+            iluminacao_lona()
+            nivel_agua()
+            silo_raçao()
+            solo_ave()
+
+arquivo = open('dadossensores.txt', 'a')
+while True:
+           print('1-Luz ambiente ')
+           print('2-Reservatório de agua ')
+           print('3-Silo de ração ')
+           print('4-Solo da ave ')
+           print('5-Mostrar lista ')
+           print('6-Parar')
+           
+           op = int(input('Digite a opção que deseja visualizar os dados: '))
+           
+           if op == 1:
+            iluminacao_lona()
+           elif op == 2:
+            nivel_agua()
+           elif op == 3:
+            silo_raçao()
+           elif op == 4:
+            solo_ave()
+           elif op == 5:
+            print(f'{iluminacao_lona()}', file=arquivo)
+            print(f'{nivel_agua()}', file=arquivo)
+            print(f'{silo_raçao()}', file=arquivo)
+            print(f'{solo_ave()}', file=arquivo)
+
+            break
+           elif op == 6:
+            break
+
+
+arquivo = open('dadossensores.txt', 'a')
+
+'''
+with open('dadossensores.txt','a') as arquivo:
+        arquivo.write(str(a) + '\n')
+        print(a)
+        '''
