@@ -1,0 +1,41 @@
+import psycopg2
+try:
+    connection = psycopg2.connect(user="postgres",
+                                  password="postgres",
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="loja_python")
+    cursor = connection.cursor()
+    id = input("ID do usuario: ")
+    cliente = input("Nome do Cliente: ")
+    produto = input("Nome do Produto: ")
+    data = input("Data de compra do produto: ")
+    preco = input("Preço do produto: ")
+    quantidade = input("Quantidade comprada: ")
+
+    dados = '\''+id + '\',\'' + cliente + '\',\'' + produto + '\',\'' + \
+        data + '\',\'' + preco + '\',\'' + quantidade + '\''
+
+    declaracao = """INSERT INTO public.vendas
+(id_venda, cliente, produto, data_venda, preco, quantidade)
+VALUES("""
+
+    sql = declaracao + dados + ');'
+
+    postgres_insert_query = sql
+
+    cursor.execute(postgres_insert_query)
+
+    connection.commit()
+    count = cursor.rowcount
+    print(count, "Record inserted successfully into Vendas table")
+
+except (Exception, psycopg2.Error) as error:
+    print("Failed to insert record into Vendas table", error)
+
+# finally:
+    # closing database connection.
+    if connection:
+        cursor.close()
+        connection.close()
+        print("PostgreSQL connection is closed")
